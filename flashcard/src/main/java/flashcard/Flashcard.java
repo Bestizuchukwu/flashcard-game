@@ -6,7 +6,15 @@ import java.io.File;
 
 public class Flashcard {
     public static void main(String[] args) {
-        System.out.println()
+        // Checking if the file path is provided
+        if (args.length < 1){
+            System.out.println("Please provide the path to the flashcard questions");
+            System.exit(1);
+        }
+        // Get the path of the flashcard question from the command line
+        String flashcardFilePath = args[0];
+        // print welcome message to the user
+        System.out.println("Welcome to flashcard game, your questions are from " + flashcardFilePath);
         FlashcardGame flashcardGame = new FlashcardGame();
         Options options = createOptions();
         CommandLineParser parser = new DefaultParser();
