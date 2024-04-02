@@ -9,6 +9,8 @@ public class Flashcard
 {
     public static void main( String[] args )
     {
+
+        FlashcardGame flashcardGame = new FlashcardGame();
         // creating an instance of the Options in the apache commons
         Options options = createOptions();
         CommandLIneParser parser = new DefaultParser();
