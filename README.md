@@ -1,0 +1,1 @@
+This project is aimed at creating a command line game which receives input from the user and depending on the input can display questions accordingly and tell the user whether they are correct or wrong.
