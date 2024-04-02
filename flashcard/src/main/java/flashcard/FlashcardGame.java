@@ -1,10 +1,11 @@
+package flashcard;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 public class FlashcardGame {
@@ -30,13 +31,13 @@ public class FlashcardGame {
                     String question = parts[1].trim();
                     String answer = parts[0].trim();
                     // Present inverted question
-                    presentQuestion(question, answer);
+                    presentQuestion(question, generateOptions(answer));
                 } else {
                     // Present question as it is
                     String[] parts = questionAndAnswer.split("Answer:");
                     String question = parts[0].trim();
                     String answer = parts[1].trim();
-                    presentQuestion(question, answer);
+                    presentQuestion(question, generateOptions(answer));
                 }
             }
         }
@@ -70,7 +71,6 @@ public class FlashcardGame {
         List<String> options = new ArrayList<>();
         options.add(answer); // Add correct answer
         // Add incorrect answers (dummy options)
-        // For simplicity, let's just shuffle the characters of the correct answer
         List<Character> chars = new ArrayList<>();
         for (char c : answer.toCharArray()) {
             chars.add(c);
