@@ -13,6 +13,11 @@ public class FlashcardGame {
 
 
     public void startGame(List<String> flashcardQuestionsAndAnswers, String order, int repetitions, boolean invertCards) {
+         // Check if order is provided and valid, otherwise shuffle randomly
+    if (!order.equals("worst-first") && !order.equals("recent-mistakes-first")) {
+        Collections.shuffle(flashcardQuestionsAndAnswers);
+    }
+        
         for (String questionAndAnswer : flashcardQuestionsAndAnswers) {
             String[] parts = questionAndAnswer.split("Answer:");
     
