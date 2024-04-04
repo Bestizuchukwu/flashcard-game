@@ -1,60 +1,42 @@
 package flashcard;
-// importing my dependency and file handler
-import org.apache.commons.cli.*;
-import java.io.File;
 
+import org.apache.commons.cli.*;
+
+import java.util.List;
 
 public class Flashcard {
     public static void main(String[] args) {
         // Checking if the file path is provided
-        if (args.length < 1){
+        if (args.length < 1) {
             System.out.println("Please provide the path to the flashcard questions");
             System.exit(1);
         }
+    
         // Get the path of the flashcard question from the command line
         String flashcardFilePath = args[0];
-        // print welcome message to the user
-        System.out.println("Welcome to flashcard game, your questions are from " + flashcardFilePath);
+    
+        // Create an instance of FlashcardGame
         FlashcardGame flashcardGame = new FlashcardGame();
+    
+        // Read flashcard questions and answers from the file
+        List<String> flashcardQuestionsAndAnswers = flashcardGame.readQuestionsAndAnswersFromFile(flashcardFilePath);
+    
+        // Print welcome message to the user
+        System.out.println("Welcome to flashcard game, your questions are from " + flashcardFilePath);
+    
+        // Parse command line options
         Options options = createOptions();
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine cmd = parser.parse(options, args);
-            if (cmd.hasOption("help") || args.length == 0) {
-                HelpFormatter formatter = new HelpFormatter();
-                formatter.printHelp("flashcard <card-file> [options]", options);
-                System.exit(0);
-            }
-            String[] remainingArgs = cmd.getArgs();
-            if (remainingArgs.length != 1) {
-                System.err.println("Invalid usage. Please provide a card file.");
-                System.exit(1);
-            }
-
             String order = cmd.getOptionValue("order", "random");
-            if (!order.equals("random") && !order.equals("worst-first") && !order.equals("recent-mistakes-first")) {
-                System.err.println("Invalid value for option --order. Valid choices are: random, worst-first, recent-mistakes-first");
-                System.exit(1);
-            }
-
-            int repetitions = -1;
-            String repetitionsValue = cmd.getOptionValue("repetitions");
-            if (repetitionsValue != null) {
-                try {
-                    repetitions = Integer.parseInt(repetitionsValue);
-                    if (repetitions <= 0) {
-                        throw new NumberFormatException();
-                    }
-                } catch (NumberFormatException error) {
-                    System.err.println("Invalid value for option --repetitions. Please provide a positive integer.");
-                    System.exit(1);
-                }
-            }
-
-            boolean invertCards = cmd.hasOption("invertCars");
-
-        } catch (ParseException error) {
-            System.err.println("Error parsing command-line arguments: " + error.getMessage());
+            int repetitions = Integer.parseInt(cmd.getOptionValue("repetitions", "-1"));
+            boolean invertCards = cmd.hasOption("invertCards");
+    
+            // Start the game with provided options
+            flashcardGame.startGame(flashcardQuestionsAndAnswers, order, repetitions, invertCards);
+        } catch (ParseException | NumberFormatException error) {
+            System.err.println("Error: " + error.getMessage());
             System.exit(1);
         }
     }
