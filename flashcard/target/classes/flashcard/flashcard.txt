@@ -1,0 +1,335 @@
+Question: What is the capital of Australia?
+A) Sydney
+B) Canberra
+C) Melbourne
+D) Brisbane
+Answer: B
+
+Question: What is the capital of Italy?
+A) Paris
+B) Rome
+C) Madrid
+D) Berlin
+Answer: B
+
+Question: What is the capital of Egypt?
+A) Cairo
+B) Istanbul
+C) Tehran
+D) Riyadh
+Answer: A
+
+Question: What is the capital of Canada?
+A) Ottawa
+B) Toronto
+C) Vancouver
+D) Montreal
+Answer: A
+
+Question: What is the capital of South Africa?
+A) Johannesburg
+B) Cape Town
+C) Pretoria
+D) Durban
+Answer: C
+
+Question: What is the capital of Argentina?
+A) Buenos Aires
+B) Santiago
+C) Lima
+D) Bogota
+Answer: A
+
+Question: What is the capital of Russia?
+A) Moscow
+B) St. Petersburg
+C) Kiev
+D) Warsaw
+Answer: A
+
+Question: What is the capital of China?
+A) Beijing
+B) Shanghai
+C) Hong Kong
+D) Taipei
+Answer: A
+
+Question: What is the capital of India?
+A) Mumbai
+B) New Delhi
+C) Bangalore
+D) Kolkata
+Answer: B
+
+Question: What is the capital of Mexico?
+A) Mexico City
+B) Cancun
+C) Guadalajara
+D) Monterrey
+Answer: A
+
+Question: What is the capital of Spain?
+A) Madrid
+B) Barcelona
+C) Valencia
+D) Seville
+Answer: A
+
+Question: What is the capital of Germany?
+A) Berlin
+B) Munich
+C) Frankfurt
+D) Hamburg
+Answer: A
+
+Question: What is the capital of France?
+A) Paris
+B) Marseille
+C) Lyon
+D) Nice
+Answer: A
+
+Question: What is the capital of United Kingdom?
+A) London
+B) Manchester
+C) Birmingham
+D) Liverpool
+Answer: A
+
+Question: What is the capital of Brazil?
+A) Brasília
+B) Rio de Janeiro
+C) São Paulo
+D) Salvador
+Answer: A
+
+Question: What is the capital of Nigeria?
+A) Lagos
+B) Abuja
+C) Kano
+D) Ibadan
+Answer: B
+
+Question: What is the capital of Pakistan?
+A) Karachi
+B) Lahore
+C) Islamabad
+D) Peshawar
+Answer: C
+
+Question: What is the capital of Turkey?
+A) Istanbul
+B) Ankara
+C) Izmir
+D) Antalya
+Answer: B
+
+Question: What is the capital of Iran?
+A) Tehran
+B) Istanbul
+C) Baghdad
+D) Riyadh
+Answer: A
+
+Question: What is the capital of Thailand?
+A) Bangkok
+B) Phuket
+C) Chiang Mai
+D) Pattaya
+Answer: A
+
+Question: What is the capital of Indonesia?
+A) Jakarta
+B) Bali
+C) Surabaya
+D) Bandung
+Answer: A
+
+Question: What is the capital of Bangladesh?
+A) Dhaka
+B) Chittagong
+C) Khulna
+D) Rajshahi
+Answer: A
+
+Question: What is the capital of Philippines?
+A) Manila
+B) Cebu
+C) Davao City
+D) Quezon City
+Answer: A
+
+Question: What is the capital of Vietnam?
+A) Hanoi
+B) Ho Chi Minh City
+C) Da Nang
+D) Hue
+Answer: A
+
+Question: What is the capital of Japan?
+A) Tokyo
+B) Osaka
+C) Kyoto
+D) Nagoya
+Answer: A
+
+Question: What is the capital of Saudi Arabia?
+A) Riyadh
+B) Jeddah
+C) Mecca
+D) Medina
+Answer: A
+
+Question: What is the capital of South Korea?
+A) Seoul
+B) Busan
+C) Incheon
+D) Daegu
+Answer: A
+
+Question: What is the capital of North Korea?
+A) Pyongyang
+B) Seoul
+C) Busan
+D) Incheon
+Answer: A
+
+Question: What is the capital of Iraq?
+A) Baghdad
+B) Mosul
+C) Basra
+D) Erbil
+Answer: A
+
+Question: What is the capital of Afghanistan?
+A) Kabul
+B) Kandahar
+C) Herat
+D) Mazar-i-Sharif
+Answer: A
+
+Question: What is the capital of Ukraine?
+A) Kiev
+B) Kharkiv
+C) Lviv
+D) Odessa
+Answer: A
+
+Question: What is the capital of Kazakhstan?
+A) Nur-Sultan
+B) Almaty
+C) Astana
+D) Karaganda
+Answer: A
+
+Question: What is the capital of Uzbekistan?
+A) Tashkent
+B) Samarkand
+C) Bukhara
+D) Andijan
+Answer: A
+
+Question: What is the capital of Kenya?
+A) Nairobi
+B) Mombasa
+C) Kisumu
+D) Nakuru
+Answer: A
+
+Question: What is the capital of Tanzania?
+A) Dodoma
+B) Dar es Salaam
+C) Zanzibar City
+D) Arusha
+Answer: A
+
+Question: What is the capital of Algeria?
+A) Algiers
+B) Oran
+C) Constantine
+D) Annaba
+Answer: A
+
+Question: What is the capital of Sudan?
+A) Khartoum
+B) Omdurman
+C) Port Sudan
+D) Nyala
+Answer: A
+
+Question: What is the capital of Morocco?
+A) Rabat
+B) Casablanca
+C) Marrakesh
+D) Fez
+Answer: A
+
+Question: What is the capital of Ethiopia?
+A) Addis Ababa
+B) Dire Dawa
+C) Mekelle
+D) Bahir Dar
+Answer: A
+
+Question: What is the capital of Colombia?
+A) Bogotá
+B) Medellín
+C) Cali
+D) Barranquilla
+Answer: A
+
+Question: What is the capital of Peru?
+A) Lima
+B) Arequipa
+C) Cusco
+D) Trujillo
+Answer: A
+
+Question: What is the capital of Venezuela?
+A) Caracas
+B) Maracaibo
+C) Valencia
+D) Barquisimeto
+Answer: A
+
+Question: What is the capital of Chile?
+A) Santiago
+B) Valparaíso
+C) Concepción
+D) La Serena
+Answer: A
+
+Question: What is the capital of Ecuador?
+A) Quito
+B) Guayaquil
+C) Cuenca
+D) Ambato
+Answer: A
+
+Question: What is the capital of Guatemala?
+A) Guatemala City
+B) Antigua Guatemala
+C) Quetzaltenango
+D) Escuintla
+Answer: A
+
+Question: What is the capital of Cuba?
+A) Havana
+B) Santiago de Cuba
+C) Camagüey
+D) Holguín
+Answer: A
+
+Question: What is the capital of Haiti?
+A) Port-au-Prince
+B) Cap-Haïtien
+C) Jacmel
+D) Gonaïves
+Answer: A
+
+Question: What is the capital of Dominican Republic?
+A) Santo Domingo
+B) Santiago
+C) Santo Domingo de Guzmán
+D) La Romana
+Answer: A

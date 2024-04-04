@@ -19,6 +19,7 @@ public class Flashcard {
         FlashcardGame flashcardGame = new FlashcardGame();
     
         // Read flashcard questions and answers from the file
+        @SuppressWarnings("static-access")
         List<String> flashcardQuestionsAndAnswers = flashcardGame.readQuestionsAndAnswersFromFile(flashcardFilePath);
     
         // Print welcome message to the user
@@ -56,7 +57,7 @@ public class Flashcard {
                 .argName("num")
                 .desc("the number of times each card should be answered successfully. If not provided, every card is presented once, regardless of the correctness of the answer.")
                 .build());
-        options.addOption("invertCars", false, "If set, it flips answer and question for each card. That is, it prompts with the card's answer and the user provide the corresponding question. [Default: false]");
+        options.addOption("invertCards", false, "If set, it flips answer and question for each card. That is, it prompts with the card's answer and the user provide the corresponding question. [Default: false]");
         return options;
     }
 }

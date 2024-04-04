@@ -38,7 +38,7 @@ public class FlashcardGame {
         // Print options A, B, C, D
         char option = 'A';
         for (String choice : choices) {
-            System.out.println(option + ") " + choice);
+            System.out.println(option + ")" + choice);
             option++;
         }
 
@@ -57,9 +57,9 @@ public class FlashcardGame {
 
     private static void checkAnswer(String userAnswer, String correctAnswer) {
         if (userAnswer.equals(correctAnswer)) {
-            System.out.println("You are Correct! :)");
+            System.out.println("You are Correct! :) ");
         } else {
-            System.out.println("You are wrong! :(");
+            System.out.println("You are wrong! :( ");
         }
         System.out.println();
     }
@@ -114,23 +114,10 @@ public class FlashcardGame {
         // Print options A, B, C, D
         char option = 'A';
         for (String opt : options) {
-            System.out.println(option + ") " + opt);
+            System.out.println(option + ")" + opt);
             option++;
         }
     }
 
-    // public static String getUserAnswer() {
-    //     System.out.print("Your answer (A, B, C, or D): ");
-    //     Scanner scanner = new Scanner(System.in);
-    //     return scanner.nextLine().trim().toUpperCase();
-    // }
-
-    // public static void checkAnswer(String userAnswer, String correctAnswer) {
-    //     if (userAnswer.equals(correctAnswer)) {
-    //         System.out.println("You are Correct! :)");
-    //     } else {
-    //         System.out.println("You are wrong! :(");
-    //     }
-    //     System.out.println();
-    // }
+    
 }

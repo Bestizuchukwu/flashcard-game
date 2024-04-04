@@ -1,0 +1,40 @@
+1. The Execution Logic in the Main Method includes the following:
+
+a.The main method initializes the FlashcardGame object and handles command-line arguments using Apache Commons CLI.
+b. It checks for the presence of the help option and handles it by printing usage instructions.
+c. It parses other command-line options like order, repetitions, and invertCards, validating their values.
+d. If all validations pass, it proceeds to start the game with the provided options.
+
+2. Possible Implementations:
+
+The program Initializes a FlashcardGame object to manage the game logic.
+The program uses Apache Commons CLI to parse command-line arguments for options like help, order, repetitions, and invertCards.
+The program Validates the provided options and handle errors accordingly.
+If the options provided are valid, the game will start with the specified settings.
+
+3. Classes Needed:
+
+a. Flashcard: this is the entry point of the application, containing the main method and handling command-line arguments.
+b. FlashcardGame: Manages the game logic, including reading questions from a file, presenting questions to the user, checking answers, and handling game settings.
+
+4. Members Needed:
+
+For Flashcard class:
+a. Main method: Entry point of the application, responsible for initializing FlashcardGame and handling command-line arguments.
+b. createOptions() Method : to create command-line options 
+
+For FlashcardGame class:
+Methods:
+a. startGame(): Starts the flashcard game with given options.
+b. readQuestionsAndAnswersFromFile(): Reads questions and answers from a file.
+c. generateOptions(): Generates options for a given answer.
+d. presentQuestion(): Presents a question with options to the user.
+e. getUserAnswer(): Reads user input for answer.
+f. checkAnswer(): Checks if the user's answer is correct.
+
+5. Instance variables:
+a. questionsAndAnswers: List to hold questions and answers.
+b. order: String indicating the order of questions.
+c. repetitions: Integer indicating the number of repetitions.
+d. invertCards: Boolean indicating whether to invert cards.
+e. scanner: Scanner object to read user input.
