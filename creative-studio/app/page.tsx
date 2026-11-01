@@ -24,6 +24,10 @@ export default function Page() {
   const fabricCanvasRef = useRef<any | null>(null);
   const fabricRef = useRef<any | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const activeToolRef = useRef<Tool>("select");
+  const brushSizeRef = useRef(6);
+  const strokeColorRef = useRef("#14b8a6");
+
   const [activeTool, setActiveTool] = useState<Tool>("select");
   const [strokeColor, setStrokeColor] = useState("#14b8a6");
   const [fillColor, setFillColor] = useState("#8b5cf6");
@@ -34,7 +38,20 @@ export default function Page() {
   const getFabric = () => fabricRef.current;
 
   useEffect(() => {
+    activeToolRef.current = activeTool;
+  }, [activeTool]);
+
+  useEffect(() => {
+    brushSizeRef.current = brushSize;
+  }, [brushSize]);
+
+  useEffect(() => {
+    strokeColorRef.current = strokeColor;
+  }, [strokeColor]);
+
+  useEffect(() => {
     let cancelled = false;
+    let canvas: any = null;
 
     const initCanvas = async () => {
       try {
@@ -49,7 +66,7 @@ export default function Page() {
 
         fabricRef.current = FabricCtor;
 
-        const canvas = new FabricCtor.Canvas(canvasRef.current, {
+        canvas = new FabricCtor.Canvas(canvasRef.current, {
           width: 980,
           height: 610,
           backgroundColor: "#0b1020",
@@ -132,16 +149,16 @@ export default function Page() {
         });
 
         canvas.on("mouse:down", () => {
-          if (activeTool === "brush") {
+          if (activeToolRef.current === "brush") {
             canvas.isDrawingMode = true;
             canvas.freeDrawingBrush = new FabricCtor.PencilBrush(canvas);
-            canvas.freeDrawingBrush.width = brushSize;
-            canvas.freeDrawingBrush.color = strokeColor;
+            canvas.freeDrawingBrush.width = brushSizeRef.current;
+            canvas.freeDrawingBrush.color = strokeColorRef.current;
           }
         });
 
         canvas.on("mouse:up", () => {
-          if (activeTool === "brush") {
+          if (activeToolRef.current === "brush") {
             canvas.isDrawingMode = false;
           }
         });
@@ -154,14 +171,13 @@ export default function Page() {
 
     return () => {
       cancelled = true;
-      const canvas = fabricCanvasRef.current;
       if (canvas) {
         canvas.dispose();
-        fabricCanvasRef.current = null;
       }
+      fabricCanvasRef.current = null;
       fabricRef.current = null;
     };
-  }, [activeTool, brushSize, strokeColor]);
+  }, []);
 
   const syncCanvasMode = () => {
     const canvas = fabricCanvasRef.current;
