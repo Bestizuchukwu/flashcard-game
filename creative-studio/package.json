@@ -2,6 +2,9 @@
   "name": "creative-studio",
   "version": "1.0.0",
   "private": true,
+  "description": "Astera Studio — professional creative studio for design, branding, and visual content.",
+  "author": "Astera Labs",
+  "copyright": "© 2026 Astera Labs",
   "main": "electron/main.js",
   "scripts": {
     "dev": "next dev",
@@ -38,6 +41,7 @@
   "build": {
     "appId": "com.astera.studio",
     "productName": "Astera Studio",
+    "copyright": "© 2026 Astera Labs",
     "directories": {
       "output": "dist"
     },
@@ -48,19 +52,21 @@
       "node_modules/**/*",
       "package.json"
     ],
-    "mac": {
-      "target": [
-        "dmg",
-        "zip"
-      ],
-      "category": "public.app-category.graphics-design"
-    },
     "win": {
       "target": [
         "nsis",
         "portable"
       ],
-      "artifactName": "Astera-Studio-${version}-${arch}.exe"
+      "artifactName": "Astera-Studio-${version}-${arch}.exe",
+      "icon": "public/icon.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.graphics-design",
+      "icon": "public/icon.icns"
     }
   }
 }

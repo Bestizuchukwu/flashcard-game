@@ -1,0 +1,27 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="100" y1="80" x2="900" y2="930" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1020"/>
+      <stop offset="0.52" stop-color="#111827"/>
+      <stop offset="1" stop-color="#0A1324"/>
+    </linearGradient>
+    <linearGradient id="aGradient" x1="282" y1="173" x2="758" y2="843" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22D3EE"/>
+      <stop offset="0.36" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="28" stdDeviation="28" flood-color="#1d4ed8" flood-opacity="0.38"/>
+    </filter>
+  </defs>
+
+  <rect x="80" y="80" width="864" height="864" rx="220" fill="url(#bg)"/>
+  <rect x="120" y="120" width="784" height="784" rx="188" stroke="rgba(255,255,255,0.12)" stroke-width="4"/>
+
+  <g filter="url(#shadow)">
+    <rect x="266" y="238" width="492" height="492" rx="128" fill="url(#aGradient)"/>
+  </g>
+
+  <path d="M347 624L512 310L677 624H599L562 538H462L426 624H347ZM494 420L477 469H547L530 420H494Z" fill="white"/>
+  <path d="M423 340H600L544 482H478L423 340Z" fill="rgba(255,255,255,0.18)"/>
+</svg>
