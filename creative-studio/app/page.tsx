@@ -1,7 +1,6 @@
 "use client";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { fabric } from "fabric";
 
 type Tool = "select" | "text" | "rect" | "circle" | "image" | "brush" | "eraser";
 
@@ -22,7 +21,8 @@ const initialLayers: Layer[] = [
 
 export default function Page() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
+  const fabricCanvasRef = useRef<any | null>(null);
+  const fabricRef = useRef<any | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [activeTool, setActiveTool] = useState<Tool>("select");
   const [strokeColor, setStrokeColor] = useState("#14b8a6");
@@ -31,110 +31,129 @@ export default function Page() {
   const [layers, setLayers] = useState<Layer[]>(initialLayers);
   const [selectedLayerName, setSelectedLayerName] = useState("Background");
 
+  const getFabric = () => fabricRef.current;
+
   useEffect(() => {
-    const canvasEl = canvasRef.current;
-    if (!canvasEl) return;
+    let cancelled = false;
 
-    const canvas = new fabric.Canvas(canvasEl, {
-      width: 980,
-      height: 610,
-      backgroundColor: "#0b1020",
-      selectionColor: "#60a5fa",
-      selectionLineWidth: 1,
-      preserveObjectStacking: true,
-    });
+    const initCanvas = async () => {
+      try {
+        const { fabric } = await import("fabric");
+        if (cancelled || !canvasRef.current) return;
 
-    fabricCanvasRef.current = canvas;
+        fabricRef.current = fabric;
 
-    const bg = new fabric.Rect({
-      left: 0,
-      top: 0,
-      width: 980,
-      height: 610,
-      fill: "#111827",
-      selectable: false,
-      evented: false,
-      name: "Background",
-      objectId: 1,
-    });
+        const canvas = new fabric.Canvas(canvasRef.current, {
+          width: 980,
+          height: 610,
+          backgroundColor: "#0b1020",
+          selectionColor: "#60a5fa",
+          selectionLineWidth: 1,
+          preserveObjectStacking: true,
+        });
 
-    const card = new fabric.Rect({
-      left: 130,
-      top: 170,
-      width: 300,
-      height: 190,
-      rx: 32,
-      ry: 32,
-      fill: "#14b8a6",
-      opacity: 0.88,
-      shadow: "0 18px 55px rgba(20,184,166,0.38)",
-      name: "Accent Card",
-      objectId: 2,
-    });
+        fabricCanvasRef.current = canvas;
 
-    const orb = new fabric.Circle({
-      left: 610,
-      top: 200,
-      radius: 118,
-      fill: "#f59e0b",
-      opacity: 0.76,
-      shadow: "0 18px 55px rgba(245,158,11,0.35)",
-      name: "Glow Orb",
-      objectId: 3,
-    });
+        const bg = new fabric.Rect({
+          left: 0,
+          top: 0,
+          width: 980,
+          height: 610,
+          fill: "#111827",
+          selectable: false,
+          evented: false,
+          name: "Background",
+          objectId: 1,
+        });
 
-    const title = new fabric.Textbox("ASTERA", {
-      left: 458,
-      top: 396,
-      width: 260,
-      fontSize: 46,
-      fontWeight: 700,
-      fill: "#f8fafc",
-      fontFamily: "Inter, sans-serif",
-      textAlign: "center",
-      name: "Title",
-      objectId: 4,
-    });
+        const card = new fabric.Rect({
+          left: 130,
+          top: 170,
+          width: 300,
+          height: 190,
+          rx: 32,
+          ry: 32,
+          fill: "#14b8a6",
+          opacity: 0.88,
+          shadow: "0 18px 55px rgba(20,184,166,0.38)",
+          name: "Accent Card",
+          objectId: 2,
+        });
 
-    canvas.add(bg, card, orb, title);
-    canvas.renderAll();
+        const orb = new fabric.Circle({
+          left: 610,
+          top: 200,
+          radius: 118,
+          fill: "#f59e0b",
+          opacity: 0.76,
+          shadow: "0 18px 55px rgba(245,158,11,0.35)",
+          name: "Glow Orb",
+          objectId: 3,
+        });
 
-    canvas.on("selection:created", (event) => {
-      const active = event.selected?.[0];
-      if (active && "name" in active) {
-        setSelectedLayerName(String((active as any).name || "Object"));
+        const title = new fabric.Textbox("ASTERA", {
+          left: 458,
+          top: 396,
+          width: 260,
+          fontSize: 46,
+          fontWeight: 700,
+          fill: "#f8fafc",
+          fontFamily: "Inter, sans-serif",
+          textAlign: "center",
+          name: "Title",
+          objectId: 4,
+        });
+
+        canvas.add(bg, card, orb, title);
+        canvas.renderAll();
+
+        canvas.on("selection:created", (event: any) => {
+          const active = event.selected?.[0];
+          if (active && "name" in active) {
+            setSelectedLayerName(String(active.name || "Object"));
+          }
+        });
+
+        canvas.on("selection:updated", (event: any) => {
+          const active = event.selected?.[0];
+          if (active && "name" in active) {
+            setSelectedLayerName(String(active.name || "Object"));
+          }
+        });
+
+        canvas.on("selection:cleared", () => {
+          setSelectedLayerName("Nothing selected");
+        });
+
+        canvas.on("mouse:down", () => {
+          if (activeTool === "brush") {
+            canvas.isDrawingMode = true;
+            canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
+            canvas.freeDrawingBrush.width = brushSize;
+            canvas.freeDrawingBrush.color = strokeColor;
+          }
+        });
+
+        canvas.on("mouse:up", () => {
+          if (activeTool === "brush") {
+            canvas.isDrawingMode = false;
+          }
+        });
+      } catch (error) {
+        console.error("Fabric init failed:", error);
       }
-    });
+    };
 
-    canvas.on("selection:updated", (event) => {
-      const active = event.selected?.[0];
-      if (active && "name" in active) {
-        setSelectedLayerName(String((active as any).name || "Object"));
-      }
-    });
-
-    canvas.on("selection:cleared", () => {
-      setSelectedLayerName("Nothing selected");
-    });
-
-    canvas.on("mouse:down", () => {
-      if (activeTool === "brush") {
-        canvas.isDrawingMode = true;
-        canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
-        canvas.freeDrawingBrush.width = brushSize;
-        canvas.freeDrawingBrush.color = strokeColor;
-      }
-    });
-
-    canvas.on("mouse:up", () => {
-      if (activeTool === "brush") {
-        canvas.isDrawingMode = false;
-      }
-    });
+    initCanvas();
 
     return () => {
-      canvas.dispose();
-      fabricCanvasRef.current = null;
+      cancelled = true;
+      const canvas = fabricCanvasRef.current;
+      if (canvas) {
+        canvas.dispose();
+        fabricCanvasRef.current = null;
+      }
+      fabricRef.current = null;
     };
   }, [activeTool, brushSize, strokeColor]);
 
@@ -155,9 +174,10 @@ export default function Page() {
 
   const addText = () => {
     const canvas = getCanvas();
-    if (!canvas) return;
+    const fabricLib = getFabric();
+    if (!canvas || !fabricLib) return;
 
-    const text = new fabric.Textbox("New Text", {
+    const text = new fabricLib.Textbox("New Text", {
       left: 300,
       top: 260,
       width: 220,
@@ -178,9 +198,10 @@ export default function Page() {
 
   const addRect = () => {
     const canvas = getCanvas();
-    if (!canvas) return;
+    const fabricLib = getFabric();
+    if (!canvas || !fabricLib) return;
 
-    const rect = new fabric.Rect({
+    const rect = new fabricLib.Rect({
       left: 240,
       top: 160,
       width: 180,
@@ -200,9 +221,10 @@ export default function Page() {
 
   const addCircle = () => {
     const canvas = getCanvas();
-    if (!canvas) return;
+    const fabricLib = getFabric();
+    if (!canvas || !fabricLib) return;
 
-    const circle = new fabric.Circle({
+    const circle = new fabricLib.Circle({
       left: 520,
       top: 210,
       radius: 90,
@@ -224,12 +246,14 @@ export default function Page() {
     const reader = new FileReader();
     reader.onload = () => {
       const data = reader.result as string;
+      const fabricLib = getFabric();
+      if (!fabricLib) return;
 
-      fabric.Image.fromURL(data, (img) => {
+      fabricLib.Image.fromURL(data, (img: any) => {
         const canvas = fabricCanvasRef.current;
         if (!canvas) return;
 
-        const object = img as fabric.Image;
+        const object = img as any;
         object.set({
           left: 260,
           top: 180,
@@ -295,9 +319,8 @@ export default function Page() {
     const canvas = getCanvas();
     if (!canvas) return;
 
-    canvas.getObjects().forEach((obj) => {
-      const anyObj = obj as any;
-      if (anyObj.objectId === id) {
+    canvas.getObjects().forEach((obj: any) => {
+      if (obj.objectId === id) {
         obj.visible = !obj.visible;
       }
     });
@@ -368,9 +391,7 @@ export default function Page() {
                     if (key === "eraser") setActiveTool("select");
                   }}
                   className={`tool-button flex h-12 w-12 items-center justify-center rounded-2xl border text-xs font-bold transition ${
-                    activeTool === key
-                      ? "active"
-                      : "inactive"
+                    activeTool === key ? "active" : "inactive"
                   }`}
                   title={key}
                 >
