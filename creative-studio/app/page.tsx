@@ -38,12 +38,18 @@ export default function Page() {
 
     const initCanvas = async () => {
       try {
-        const { fabric } = await import("fabric");
+        const fabricModule = await import("fabric");
+        const FabricCtor = (fabricModule as any).fabric ?? (fabricModule as any).default ?? fabricModule;
+
+        if (!FabricCtor || typeof FabricCtor.Canvas !== "function") {
+          throw new Error("Fabric failed to initialize on the client");
+        }
+
         if (cancelled || !canvasRef.current) return;
 
-        fabricRef.current = fabric;
+        fabricRef.current = FabricCtor;
 
-        const canvas = new fabric.Canvas(canvasRef.current, {
+        const canvas = new FabricCtor.Canvas(canvasRef.current, {
           width: 980,
           height: 610,
           backgroundColor: "#0b1020",
@@ -54,7 +60,7 @@ export default function Page() {
 
         fabricCanvasRef.current = canvas;
 
-        const bg = new fabric.Rect({
+        const bg = new FabricCtor.Rect({
           left: 0,
           top: 0,
           width: 980,
@@ -66,7 +72,7 @@ export default function Page() {
           objectId: 1,
         });
 
-        const card = new fabric.Rect({
+        const card = new FabricCtor.Rect({
           left: 130,
           top: 170,
           width: 300,
@@ -80,7 +86,7 @@ export default function Page() {
           objectId: 2,
         });
 
-        const orb = new fabric.Circle({
+        const orb = new FabricCtor.Circle({
           left: 610,
           top: 200,
           radius: 118,
@@ -91,7 +97,7 @@ export default function Page() {
           objectId: 3,
         });
 
-        const title = new fabric.Textbox("ASTERA", {
+        const title = new FabricCtor.Textbox("ASTERA", {
           left: 458,
           top: 396,
           width: 260,
@@ -128,7 +134,7 @@ export default function Page() {
         canvas.on("mouse:down", () => {
           if (activeTool === "brush") {
             canvas.isDrawingMode = true;
-            canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
+            canvas.freeDrawingBrush = new FabricCtor.PencilBrush(canvas);
             canvas.freeDrawingBrush.width = brushSize;
             canvas.freeDrawingBrush.color = strokeColor;
           }
