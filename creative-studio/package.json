@@ -8,7 +8,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "desktop": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron .\""
+    "desktop": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "desktop:prod": "next build && next start -p 3000",
+    "dist": "npm run build && electron-builder --mac --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:win": "npm run build && electron-builder --win"
   },
   "dependencies": {
     "fabric": "^6.3.0",
@@ -23,11 +27,40 @@
     "autoprefixer": "10.4.20",
     "concurrently": "9.0.1",
     "electron": "31.3.0",
+    "electron-builder": "24.13.0",
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.15",
     "postcss": "8.4.41",
     "tailwindcss": "3.4.10",
     "typescript": "5.5.4",
     "wait-on": "8.0.1"
+  },
+  "build": {
+    "appId": "com.astera.studio",
+    "productName": "Astera Studio",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "app/**/*",
+      "public/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.graphics-design"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "artifactName": "Astera-Studio-${version}-${arch}.exe"
+    }
   }
 }

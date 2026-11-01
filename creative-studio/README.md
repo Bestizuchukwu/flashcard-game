@@ -1,8 +1,8 @@
-# Astera Studio Desktop
+# Astera Studio Desktop Packaging
 
-This is the desktop version of the Adobe-inspired creative studio app.
+This project is configured for desktop packaging on Windows and macOS with Electron.
 
-## Run it
+## Run the app in desktop mode
 
 ```bash
 cd creative-studio
@@ -10,15 +10,30 @@ npm install
 npm run desktop
 ```
 
-This starts the Next.js app and opens it inside an Electron window.
+## Build the packaged desktop app
 
-## Features
-- Premium dark workspace
-- Left tool panel
-- Layers panel
-- Text, shape, brush, and image tools
-- Export to PNG
-- Desktop wrapper for local app usage
+On macOS:
+
+```bash
+cd creative-studio
+npm run dist:mac
+```
+
+On Windows:
+
+```bash
+cd creative-studio
+npm run dist:win
+```
+
+To build both Windows and macOS artifacts from a compatible machine:
+
+```bash
+cd creative-studio
+npm run dist
+```
 
 ## Notes
-The desktop wrapper runs the web app inside Electron, which makes it easy to convert the browser app into a desktop experience without rewriting the editor logic.
+- The app is built with Next.js and wrapped in Electron.
+- Production packaging starts the local Next.js server automatically and loads it in the desktop window.
+- The output files are placed in the `dist` folder.

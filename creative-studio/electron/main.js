@@ -1,7 +1,27 @@
 const { app, BrowserWindow, shell } = require("electron");
 const path = require("path");
+const { spawn } = require("child_process");
 
 const isDev = !app.isPackaged;
+let nextServer = null;
+
+function startNextServer() {
+  if (isDev) return;
+
+  const appRoot = path.join(__dirname, "..");
+  const nextBin = path.join(
+    appRoot,
+    "node_modules",
+    ".bin",
+    process.platform === "win32" ? "next.cmd" : "next"
+  );
+
+  nextServer = spawn(nextBin, ["start", "-p", "3000"], {
+    cwd: appRoot,
+    shell: true,
+    stdio: "inherit",
+  });
+}
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -22,9 +42,7 @@ function createWindow() {
   });
 
   mainWindow.setMenuBarVisibility(false);
-
-  const appUrl = isDev ? "http://localhost:3000" : "http://localhost:3000";
-  mainWindow.loadURL(appUrl);
+  mainWindow.loadURL("http://localhost:3000");
 
   if (isDev) {
     mainWindow.webContents.openDevTools({ mode: "detach" });
@@ -37,6 +55,10 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  if (!isDev) {
+    startNextServer();
+  }
+
   createWindow();
 
   app.on("activate", () => {
@@ -45,6 +67,10 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => {
+  if (nextServer) {
+    nextServer.kill();
+  }
+
   if (process.platform !== "darwin") {
     app.quit();
   }
