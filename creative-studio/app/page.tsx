@@ -316,39 +316,45 @@ export default function Page() {
   ] as const;
 
   return (
-    <main className="min-h-screen bg-[#050b16] text-slate-100">
-      <div className="mx-auto flex h-screen max-w-[1800px] flex-col">
-        <header className="flex items-center justify-between border-b border-white/10 bg-[#0a1220]/90 px-5 py-3 backdrop-blur-xl">
+    <main className="studio-shell min-h-screen text-slate-100">
+      <div className="mx-auto flex h-screen max-w-[1850px] flex-col">
+        <header className="app-header flex items-center justify-between border-b border-white/10 px-5 py-3">
           <div className="flex items-center gap-4">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 via-blue-500 to-indigo-600 text-sm font-black shadow-lg shadow-cyan-500/20">
+            <div className="brand-mark flex h-10 w-10 items-center justify-center rounded-2xl text-sm font-black shadow-[0_12px_30px_rgba(59,130,246,0.45)]">
               A
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-[0.28em] text-slate-400">
+              <p className="text-[10px] uppercase tracking-[0.34em] text-slate-400">
                 Creative Suite
               </p>
-              <h1 className="text-lg font-semibold">Astera Studio</h1>
+              <h1 className="text-xl font-semibold tracking-tight">Astera Studio</h1>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <button className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-slate-300 hover:bg-white/10">
-              File
-            </button>
-            <button className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-slate-300 hover:bg-white/10">
-              Edit
-            </button>
-            <button className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-slate-300 hover:bg-white/10">
-              View
-            </button>
-            <button className="rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-cyan-600/30">
+          <div className="flex items-center gap-2.5">
+            {[
+              "File",
+              "Edit",
+              "Image",
+              "Layer",
+              "Type",
+              "Select",
+            ].map((item) => (
+              <button
+                key={item}
+                className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] font-medium text-slate-300 transition hover:border-white/15 hover:bg-white/[0.07]"
+              >
+                {item}
+              </button>
+            ))}
+            <button className="ml-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-[11px] font-semibold text-white shadow-[0_12px_25px_rgba(59,130,246,0.45)]">
               Share
             </button>
           </div>
         </header>
 
         <div className="flex flex-1 overflow-hidden">
-          <aside className="w-[90px] border-r border-white/10 bg-[#0b1524]">
+          <aside className="toolbar-rail w-[96px] border-r border-white/10 bg-[#0b1524]/80">
             <div className="flex flex-col items-center gap-3 px-3 py-5">
               {topTools.map(({ key, label }) => (
                 <button
@@ -361,10 +367,10 @@ export default function Page() {
                     if (key === "image") fileInputRef.current?.click();
                     if (key === "eraser") setActiveTool("select");
                   }}
-                  className={`flex h-12 w-12 items-center justify-center rounded-2xl border text-xs font-bold transition ${
+                  className={`tool-button flex h-12 w-12 items-center justify-center rounded-2xl border text-xs font-bold transition ${
                     activeTool === key
-                      ? "border-cyan-400 bg-cyan-500/15 text-cyan-300 shadow-lg shadow-cyan-500/20"
-                      : "border-white/5 bg-white/5 text-slate-400 hover:border-white/10 hover:text-slate-200"
+                      ? "active"
+                      : "inactive"
                   }`}
                   title={key}
                 >
@@ -374,17 +380,17 @@ export default function Page() {
             </div>
           </aside>
 
-          <aside className="w-[300px] border-r border-white/10 bg-[#0d1728] p-4">
-            <div className="mb-5 rounded-2xl border border-white/10 bg-white/5 p-3">
-              <p className="mb-2 text-[10px] uppercase tracking-[0.28em] text-slate-400">
+          <aside className="panel-surface w-[300px] border-r border-white/10 p-4">
+            <div className="mb-5 rounded-2xl border border-white/10 bg-white/[0.04] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+              <p className="mb-2 text-[10px] uppercase tracking-[0.26em] text-slate-400">
                 Project
               </p>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-semibold">Brand Launch</h2>
+                  <h2 className="text-lg font-semibold tracking-tight">Brand Launch</h2>
                   <p className="text-xs text-slate-400">Q4 creative system</p>
                 </div>
-                <div className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.18em] text-emerald-300">
+                <div className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.18em] text-emerald-300">
                   Live
                 </div>
               </div>
@@ -392,86 +398,41 @@ export default function Page() {
 
             <div className="mb-4">
               <p className="mb-3 text-[10px] uppercase tracking-[0.26em] text-slate-400">
-                Tools
+                Quick actions
               </p>
               <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={addText}
-                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-left text-sm text-slate-200 hover:bg-white/10"
-                >
-                  Add text
-                </button>
-                <button
-                  onClick={addRect}
-                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-left text-sm text-slate-200 hover:bg-white/10"
-                >
-                  Add rect
-                </button>
-                <button
-                  onClick={addCircle}
-                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-left text-sm text-slate-200 hover:bg-white/10"
-                >
-                  Add circle
-                </button>
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-left text-sm text-slate-200 hover:bg-white/10"
-                >
-                  Import image
-                </button>
-                <button
-                  onClick={deleteSelectedObject}
-                  className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-left text-sm text-rose-200 hover:bg-rose-500/15"
-                >
-                  Delete
-                </button>
-                <button
-                  onClick={exportPng}
-                  className="rounded-xl border border-cyan-500/40 bg-cyan-500/10 px-3 py-2 text-left text-sm text-cyan-200 hover:bg-cyan-500/15"
-                >
-                  Export PNG
-                </button>
+                <button onClick={addText} className="mini-action">Add text</button>
+                <button onClick={addRect} className="mini-action">Add rect</button>
+                <button onClick={addCircle} className="mini-action">Add circle</button>
+                <button onClick={() => fileInputRef.current?.click()} className="mini-action">Import</button>
+                <button onClick={deleteSelectedObject} className="mini-action danger">Delete</button>
+                <button onClick={exportPng} className="mini-action accent">Export</button>
               </div>
 
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={addImage}
-                className="hidden"
-              />
+              <input ref={fileInputRef} type="file" accept="image/*" onChange={addImage} className="hidden" />
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-[#0f1b2d] p-3">
+            <div className="rounded-2xl border border-white/10 bg-[#0f1b2d]/90 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
               <div className="mb-3 flex items-center justify-between">
-                <p className="text-[10px] uppercase tracking-[0.26em] text-slate-400">
-                  Layers
-                </p>
-                <button className="text-[10px] uppercase tracking-[0.18em] text-cyan-300">
-                  + Add
-                </button>
+                <p className="text-[10px] uppercase tracking-[0.26em] text-slate-400">Layers</p>
+                <button className="text-[10px] uppercase tracking-[0.18em] text-cyan-300">+ Add</button>
               </div>
 
               <div className="space-y-2">
                 {layers.map((layer) => (
                   <div
                     key={layer.id}
-                    className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2"
+                    className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] px-3 py-2 transition hover:bg-white/[0.04]"
                   >
                     <div className="flex items-center gap-3">
-                      <span
-                        className="h-3 w-3 rounded-full"
-                        style={{ background: layer.color }}
-                      />
+                      <span className="h-3 w-3 rounded-full ring-2 ring-white/10" style={{ background: layer.color }} />
                       <span className="text-sm text-slate-200">{layer.name}</span>
                     </div>
 
                     <button
                       onClick={() => toggleLayerVisibility(layer.id)}
                       className={`h-6 w-11 rounded-full border transition ${
-                        layer.visible
-                          ? "border-emerald-400/60 bg-emerald-500/20"
-                          : "border-white/10 bg-slate-800"
+                        layer.visible ? "border-emerald-400/60 bg-emerald-500/20" : "border-white/10 bg-slate-800"
                       }`}
                     >
                       <span
@@ -487,33 +448,36 @@ export default function Page() {
           </aside>
 
           <section className="flex flex-1 flex-col bg-[#091321]">
-            <div className="border-b border-white/10 bg-[#0a1422] px-4 py-3">
+            <div className="border-b border-white/10 bg-[#0a1422]/90 px-4 py-3">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-400">
+                <div className="flex items-center gap-2">
+                  <div className="rounded-lg border border-white/10 bg-white/[0.04] px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-400">
                     Workspace
                   </div>
-                  <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-400">
+                  <div className="rounded-lg border border-white/10 bg-white/[0.04] px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-400">
                     16:10
+                  </div>
+                  <div className="rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.18em] text-cyan-300">
+                    Smart Layout
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <button className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-300 hover:bg-white/10">
+                  <button className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-slate-300 transition hover:bg-white/[0.08]">
                     Undo
                   </button>
-                  <button className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-300 hover:bg-white/10">
+                  <button className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-slate-300 transition hover:bg-white/[0.08]">
                     Redo
                   </button>
-                  <button className="rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-violet-500/30">
+                  <button className="rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-600 px-4 py-2 text-xs font-semibold text-white shadow-[0_12px_25px_rgba(168,85,247,0.42)]">
                     Publish
                   </button>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-1 items-center justify-center bg-[radial-gradient(circle_at_center,_rgba(30,41,59,0.85),_rgba(2,6,23,1)_70%)] p-6">
-              <div className="w-full max-w-[1280px] rounded-[28px] border border-white/10 bg-[#0f172a]/80 shadow-[0_40px_80px_rgba(15,23,42,0.9)]">
+            <div className="flex flex-1 items-center justify-center bg-[radial-gradient(circle_at_center,_rgba(15,23,42,0.9),_rgba(2,6,23,1)_68%)] p-6">
+              <div className="workspace-frame relative w-full max-w-[1280px] overflow-hidden rounded-[30px] border border-white/10 bg-[#0f172a]/80 shadow-[0_40px_100px_rgba(15,23,42,0.9)]">
                 <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
                   <div className="flex items-center gap-3">
                     <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
@@ -525,30 +489,37 @@ export default function Page() {
                   </div>
                 </div>
 
-                <div className="overflow-hidden rounded-b-[28px] p-4">
-                  <div className="mx-auto flex w-full items-center justify-center overflow-auto rounded-[22px] border border-white/10 bg-[#0b1020] p-2">
-                    <canvas
-                      ref={canvasRef}
-                      id="studio-canvas"
-                      className="max-w-full rounded-[16px]"
-                    />
+                <div className="canvas-toolbar flex items-center gap-2 border-b border-white/10 px-4 py-2.5">
+                  {[
+                    "Move Tool",
+                    "Adjustment",
+                    "Brush",
+                    "Mask",
+                    "Crop",
+                    "Smart Object",
+                  ].map((item) => (
+                    <button key={item} className="rounded-lg border border-white/10 bg-white/[0.02] px-2.5 py-1.5 text-[10px] uppercase tracking-[0.18em] text-slate-300 hover:bg-white/[0.06]">
+                      {item}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="overflow-hidden rounded-b-[30px] p-4">
+                  <div className="mx-auto flex w-full items-center justify-center overflow-auto rounded-[24px] border border-white/10 bg-[#0b1020] p-2 shadow-[inset_0_1px_0_rgba(148,163,184,0.1)]">
+                    <canvas ref={canvasRef} id="studio-canvas" className="max-w-full rounded-[18px]" />
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <aside className="w-[320px] border-l border-white/10 bg-[#0d1728] p-4">
+          <aside className="panel-surface w-[320px] border-l border-white/10 p-4">
             <div className="mb-5">
-              <p className="mb-3 text-[10px] uppercase tracking-[0.26em] text-slate-400">
-                Inspector
-              </p>
+              <p className="mb-3 text-[10px] uppercase tracking-[0.26em] text-slate-400">Inspector</p>
 
-              <div className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-3">
+              <div className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
                 <div>
-                  <label className="mb-1 block text-xs text-slate-400">
-                    Stroke color
-                  </label>
+                  <label className="mb-1 block text-xs text-slate-400">Stroke color</label>
                   <input
                     type="color"
                     value={strokeColor}
@@ -558,9 +529,7 @@ export default function Page() {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-xs text-slate-400">
-                    Fill color
-                  </label>
+                  <label className="mb-1 block text-xs text-slate-400">Fill color</label>
                   <input
                     type="color"
                     value={fillColor}
@@ -570,9 +539,7 @@ export default function Page() {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-xs text-slate-400">
-                    Brush size
-                  </label>
+                  <label className="mb-1 block text-xs text-slate-400">Brush size</label>
                   <input
                     type="range"
                     min={1}
@@ -584,20 +551,16 @@ export default function Page() {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-xs text-slate-400">
-                    Active tool
-                  </label>
-                  <div className="rounded-xl border border-white/10 bg-[#101d30] px-3 py-2 text-sm text-slate-200">
+                  <label className="mb-1 block text-xs text-slate-400">Active tool</label>
+                  <div className="rounded-xl border border-white/10 bg-[#101d30] px-3 py-2 text-sm text-slate-200 uppercase tracking-[0.12em]">
                     {activeTool}
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-[#0f1b2d] p-3">
-              <p className="mb-3 text-[10px] uppercase tracking-[0.26em] text-slate-400">
-                Properties
-              </p>
+            <div className="rounded-2xl border border-white/10 bg-[#0f1b2d]/90 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+              <p className="mb-3 text-[10px] uppercase tracking-[0.26em] text-slate-400">Properties</p>
               <div className="space-y-3 text-sm text-slate-300">
                 <div className="flex items-center justify-between">
                   <span>Selected</span>
