@@ -24,9 +24,6 @@ export default function Page() {
   const fabricCanvasRef = useRef<any | null>(null);
   const fabricRef = useRef<any | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const activeToolRef = useRef<Tool>("select");
-  const brushSizeRef = useRef(6);
-  const strokeColorRef = useRef("#14b8a6");
 
   const [activeTool, setActiveTool] = useState<Tool>("select");
   const [strokeColor, setStrokeColor] = useState("#14b8a6");
@@ -38,25 +35,15 @@ export default function Page() {
   const getFabric = () => fabricRef.current;
 
   useEffect(() => {
-    activeToolRef.current = activeTool;
-  }, [activeTool]);
-
-  useEffect(() => {
-    brushSizeRef.current = brushSize;
-  }, [brushSize]);
-
-  useEffect(() => {
-    strokeColorRef.current = strokeColor;
-  }, [strokeColor]);
-
-  useEffect(() => {
     let cancelled = false;
-    let canvas: any = null;
 
     const initCanvas = async () => {
       try {
         const fabricModule = await import("fabric");
-        const FabricCtor = (fabricModule as any).fabric ?? (fabricModule as any).default ?? fabricModule;
+        const FabricCtor =
+          (fabricModule as any).fabric ??
+          (fabricModule as any).default ??
+          fabricModule;
 
         if (!FabricCtor || typeof FabricCtor.Canvas !== "function") {
           throw new Error("Fabric failed to initialize on the client");
@@ -66,7 +53,7 @@ export default function Page() {
 
         fabricRef.current = FabricCtor;
 
-        canvas = new FabricCtor.Canvas(canvasRef.current, {
+        const canvas = new FabricCtor.Canvas(canvasRef.current, {
           width: 980,
           height: 610,
           backgroundColor: "#0b1020",
@@ -147,21 +134,6 @@ export default function Page() {
         canvas.on("selection:cleared", () => {
           setSelectedLayerName("Nothing selected");
         });
-
-        canvas.on("mouse:down", () => {
-          if (activeToolRef.current === "brush") {
-            canvas.isDrawingMode = true;
-            canvas.freeDrawingBrush = new FabricCtor.PencilBrush(canvas);
-            canvas.freeDrawingBrush.width = brushSizeRef.current;
-            canvas.freeDrawingBrush.color = strokeColorRef.current;
-          }
-        });
-
-        canvas.on("mouse:up", () => {
-          if (activeToolRef.current === "brush") {
-            canvas.isDrawingMode = false;
-          }
-        });
       } catch (error) {
         console.error("Fabric init failed:", error);
       }
@@ -171,10 +143,11 @@ export default function Page() {
 
     return () => {
       cancelled = true;
+      const canvas = fabricCanvasRef.current;
       if (canvas) {
         canvas.dispose();
+        fabricCanvasRef.current = null;
       }
-      fabricCanvasRef.current = null;
       fabricRef.current = null;
     };
   }, []);
@@ -377,14 +350,7 @@ export default function Page() {
           </div>
 
           <div className="flex items-center gap-2.5">
-            {[
-              "File",
-              "Edit",
-              "Image",
-              "Layer",
-              "Type",
-              "Select",
-            ].map((item) => (
+            {["File", "Edit", "Image", "Layer", "Type", "Select"].map((item) => (
               <button
                 key={item}
                 className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] font-medium text-slate-300 transition hover:border-white/15 hover:bg-white/[0.07]"
@@ -541,7 +507,10 @@ export default function Page() {
                     "Crop",
                     "Smart Object",
                   ].map((item) => (
-                    <button key={item} className="rounded-lg border border-white/10 bg-white/[0.02] px-2.5 py-1.5 text-[10px] uppercase tracking-[0.18em] text-slate-300 hover:bg-white/[0.06]">
+                    <button
+                      key={item}
+                      className="rounded-lg border border-white/10 bg-white/[0.02] px-2.5 py-1.5 text-[10px] uppercase tracking-[0.18em] text-slate-300 hover:bg-white/[0.06]"
+                    >
                       {item}
                     </button>
                   ))}
